@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  devhost-be:
+    build:  
+      context: .
+      dockerfile: Dockerfile.be
+    container_name: devhost-be
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces:cached
+      - gradle-cache:/home/vscode/.gradle
+      - ${HOME}/.ssh:/home/vscode/.ssh:ro
+      # SSH mount removed to avoid relying on host HOME variable substitution
+      # If you need SSH access in the container, add an explicit mount with a
+      # correct host path or configure SSH agent forwarding.
+    env_file:
+      - ../context.env
+    # environment: (overrides in .env files, keep for reference)
+    networks: 
+      - devnet
+
+networks:
+  devnet:
+    name: devnet
+
+volumes:
+  gradle-cache:

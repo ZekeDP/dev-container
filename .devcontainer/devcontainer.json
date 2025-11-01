@@ -1,0 +1,34 @@
+{
+  "name": "backend-devcontainer-debian",
+  // Build from your local Dockerfile (no prebuilt image)
+  "build": {
+    "dockerfile": "Dockerfile.be",
+    "context": "."
+  },
+  "workspaceFolder": "/workspaces",
+  "remoteUser": "vscode",
+
+  // Mount your Windows SSH keys read-only (adjust for macOS/Linux if needed)
+  "mounts": [
+    "source=C:/Users/Admin/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
+  ],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-boot-dev-pack",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens"
+      ]
+    }
+  },
+
+  // Optional: run your init/clone steps
+  "postCreateCommand": "bash .devcontainer/setup.sh postCreate",
+
+  // Handy basic utilities
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  }
+}
