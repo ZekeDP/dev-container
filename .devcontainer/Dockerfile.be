@@ -40,5 +40,9 @@ WORKDIR /workspaces
 ENV JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
+# Set git clone method and backend repo via environment variables 
+ENV CLONE_METHOD=ssh
+ENV BACKEND_GIT=git@github.com:ZekeDP/car-rental-app-be.git
+
 # Stay alive for VS Code to attach
 CMD ["sleep", "infinity"]

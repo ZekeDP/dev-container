@@ -10,4 +10,4 @@
 *.properties text
 
 # Declare files that will always have LF line endings on checkout
-.devcontainer/setup.sh text eol=lf executable
+*.sh text eol=lf

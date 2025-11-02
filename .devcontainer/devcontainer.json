@@ -25,7 +25,7 @@
   },
 
   // Optional: run your init/clone steps
-  "postCreateCommand": "bash .devcontainer/setup.sh postCreate",
+  "postCreateCommand": "./dev-container/scripts/git-setup.sh",
 
   // Handy basic utilities
   "features": {

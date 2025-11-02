@@ -16,7 +16,8 @@ services:
       # correct host path or configure SSH agent forwarding.
     env_file:
       - ../context.env
-    # environment: (overrides in .env files, keep for reference)
+      - ../.env
+    # environment: 
     networks: 
       - devnet
 
