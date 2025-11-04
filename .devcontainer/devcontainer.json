@@ -10,7 +10,7 @@
 
   // Mount your Windows SSH keys read-only (adjust for macOS/Linux if needed)
   "mounts": [
-    "source=C:/Users/Admin/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
+    "source=/Users/zeke/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
   ],
 
   "customizations": {
@@ -25,7 +25,7 @@
   },
 
   // Optional: run your init/clone steps
-  "postCreateCommand": "./dev-container/scripts/git-setup.sh",
+  "postCreateCommand": "bash ./dev-container/scripts/git-setup.sh",
 
   // Handy basic utilities
   "features": {
