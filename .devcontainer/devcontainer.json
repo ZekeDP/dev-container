@@ -1,17 +1,25 @@
 {
-  "name": "backend-devcontainer-debian",
-  // Build from your local Dockerfile (no prebuilt image)
-  "build": {
-    "dockerfile": "Dockerfile.be",
-    "context": "."
-  },
+  "name": "rent-a-car-stack",
+  
+  // Compose defines both backend and frontend containers
+  "dockerComposeFile": "docker-compose.dev.yml",
+
+  // VS Code will attach to this service by default
+  "service": "devhost-be",
+
+  // This is where your code is mounted inside the container
   "workspaceFolder": "/workspaces",
+
+  // Default user created in both Dockerfiles
   "remoteUser": "vscode",
 
   // Mount your Windows SSH keys read-only (adjust for macOS/Linux if needed)
   "mounts": [
     "source=C:/Users/Admin/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
   ],
+
+  // Expose both backend (8080) and frontend (5173) to host
+  "forwardPorts": [8080, 5173],
 
   "customizations": {
     "vscode": {
@@ -24,11 +32,12 @@
     }
   },
 
-  // Optional: run your init/clone steps
+  // Optional: automatically clone repos if missing
   "postCreateCommand": "./dev-container/scripts/git-setup.sh",
 
   // Handy basic utilities
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {}
   }
+
 }
