@@ -1,0 +1,37 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cloned repos
+backend/
+frontend/
+
+# Logs
+*.log
+logs/
+
+# Build
+target/
+build/
+out/
+dist/
+
+# Dependencies
+node_modules/
+.gradle/
+.m2/
+
+# Temp
+*.tmp
+*.swp
+*~

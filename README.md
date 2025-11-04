@@ -1,239 +1,142 @@
-# Dev Container Setup Guide
+# Car Rental Dev Environment - Ubuntu 22.04 LTS
 
-## Overview
+Rock-solid dev container for Java 21 backend development.
 
-This project provides a containerized development environment for a Java backend application using VS Code Dev Containers.
+## ✨ Why Ubuntu 22.04?
 
-## Architecture
+- ✅ **Most Popular**: Huge community, tons of resources
+- ✅ **Rock Solid**: Extremely stable, reliable builds
+- ✅ **APT Package Manager**: Simple, just works
+- ✅ **Long-term Support**: Until April 2027
+- ✅ **Works on AWS EC2**: Very popular on AWS
+- ✅ **Best Documentation**: Easy to find help
 
-```
-.devcontainer/
-├── Dockerfile.be           # Backend container image definition
-├── devcontainer.json       # VS Code Dev Container configuration
-└── docker-compose.dev.yml  # Docker Compose orchestration (alternative method)
+## 🚀 Quick Start
 
-scripts/
-└── git-setup.sh           # Automatic repository cloning script
-
-context.env                 # Shared environment variables
-.env                       # Git configuration (SSH/HTTPS)
-```
-
-## Prerequisites
-
-1. **Docker Desktop** installed and running
-2. **VS Code** with "Dev Containers" extension
-3. **SSH Keys** configured for GitHub (if using SSH clone method)
-
-## Setup Methods
-
-### Method A: VS Code Dev Container (Recommended)
-
-This method uses `devcontainer.json` for a seamless VS Code experience.
-
-1. **Configure SSH Access** (if using SSH):
-   ```bash
-   # Ensure your SSH keys exist at ~/.ssh/
-   ls ~/.ssh/id_rsa ~/.ssh/id_ed25519
-   ```
-
-2. **Update devcontainer.json**:
-   - Edit `.devcontainer/devcontainer.json`
-   - Update the SSH mount path for your OS:
-     - **macOS/Linux**: `"source=${localEnv:HOME}/.ssh,..."`
-     - **Windows**: `"source=C:\\Users\\YourName\\.ssh,..."`
-
-3. **Configure Repository**:
-   Edit `.env`:
-   ```env
-   CLONE_METHOD=ssh  # or 'https'
-   BACKEND_GIT=git@github.com:your-username/your-repo.git
-   ```
-
-4. **Open in Container**:
-   - Open this folder in VS Code
-   - Press `F1` → "Dev Containers: Reopen in Container"
-   - Wait for container build and postCreateCommand to complete
-
-5. **Verify Setup**:
-   ```bash
-   # Check Java installation
-   java -version  # Should show Java 21
-   
-   # Check cloned repository
-   ls dev-container/backend/
-   ```
-
-### Method B: Docker Compose (Standalone)
-
-Use this if you prefer command-line workflows or don't use VS Code.
-
-1. **Start Container**:
-   ```bash
-   cd .devcontainer
-   docker-compose -f docker-compose.dev.yml up -d
-   ```
-
-2. **Attach to Container**:
-   ```bash
-   docker exec -it devhost-be bash
-   ```
-
-3. **Manual Clone** (if needed):
-   ```bash
-   ./scripts/git-setup.sh
-   ```
-
-## Environment Variables
-
-### `.env` - Git Configuration
-- `CLONE_METHOD`: `ssh` or `https`
-- `BACKEND_GIT`: Repository URL to clone
-
-### `context.env` - Runtime Configuration
-- `BACKEND_PORT`: Backend service port (default: 8080)
-- `FRONTEND_PORT`: Frontend service port (default: 5173)
-- `SPRING_PROFILES_ACTIVE`: Spring Boot profile (default: dev)
-
-## Directory Structure After Setup
-
-```
-project-root/
-├── .devcontainer/          # Container configuration
-├── dev-container/
-│   └── backend/           # Cloned backend repository (auto-created)
-├── scripts/               # Utility scripts
-└── [your workspace files]
-```
-
-## Common Tasks
-
-### Running the Backend Application
-
+### 1. Setup
 ```bash
-# Navigate to backend directory
-cd dev-container/backend
+# Clone this repo
+git clone <repo-url>
+cd car-rental-dev-environment
 
-# Build with Gradle (if using Gradle)
+# Configure
+cp config/.env.example .env
+nano .env  # Add your repo URL
+```
+
+### 2. Open in VS Code
+```bash
+code .
+```
+
+### 3. Start Container
+- Press `F1`
+- Select: "Dev Containers: Reopen in Container"
+- Wait 2-3 minutes
+
+### 4. Verify
+```bash
+java -version  # Temurin 21
+cd backend
 ./gradlew build
+```
 
-# Run Spring Boot application
+## 📁 Structure
+
+/workspace/
+├── backend/     # Your backend code
+├── frontend/    # Your frontend code
+├── docs/        # Documentation
+└── logs/        # Application logs
+
+## 🔧 Usage
+
+### Build
+```bash
+cd /workspace/backend
+
+# Gradle
+./gradlew clean build
+
+# Maven
+./mvnw clean install
+```
+
+### Run
+```bash
+# Gradle
 ./gradlew bootRun
 
-# Or with Maven
+# Maven
 ./mvnw spring-boot:run
+
+# Access: http://localhost:8080
 ```
 
-### Updating Dependencies
-
+### Test
 ```bash
-# Update Gradle wrapper
-./gradlew wrapper --gradle-version=latest
-
-# Or update Maven wrapper
-./mvnw wrapper:wrapper
+./gradlew test     # Gradle
+./mvnw test        # Maven
 ```
 
-### Rebuilding Container
+## 📦 Package Management
 
+Ubuntu uses **APT**:
 ```bash
-# In VS Code: F1 → "Dev Containers: Rebuild Container"
+# Install package
+sudo apt install package-name
 
-# Or with Docker Compose:
-docker-compose -f .devcontainer/docker-compose.dev.yml down
-docker-compose -f .devcontainer/docker-compose.dev.yml up --build -d
+# Update packages
+sudo apt update
+sudo apt upgrade
+
+# Search
+apt search package-name
 ```
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
-### SSH Key Issues
-
-**Problem**: `Permission denied (publickey)` when cloning
-
-**Solutions**:
-1. Verify SSH key is added to GitHub: https://github.com/settings/keys
-2. Test SSH connection: `ssh -T git@github.com`
-3. Check SSH mount path in `devcontainer.json` matches your system
-
-### Container Won't Start
-
-**Problem**: Container exits immediately
-
-**Solutions**:
-1. Check Docker Desktop is running
-2. View logs: `docker logs devhost-be`
-3. Verify `.env` file exists and is properly formatted
-
-### Java Version Mismatch
-
-**Problem**: Wrong Java version in container
-
-**Solutions**:
-1. Rebuild container from scratch
-2. Verify `JAVA_HOME` in Dockerfile points to correct JDK path
-
-### Port Conflicts
-
-**Problem**: Port 8080 already in use
-
-**Solutions**:
-1. Change `BACKEND_PORT` in `context.env`
-2. Stop other services using port 8080
-3. Update `docker-compose.dev.yml` port mappings if needed
-
-## Customization
-
-### Adding VS Code Extensions
-
-Edit `.devcontainer/devcontainer.json`:
-```json
-"extensions": [
-  "vscjava.vscode-java-pack",
-  "your.extension-id"
-]
+### Container won't start
+```bash
+docker ps
+docker logs java-backend-dev-ubuntu
 ```
 
-### Installing Additional Tools
+### Rebuild
+F1 → "Dev Containers: Rebuild Container"
 
-Edit `.devcontainer/Dockerfile.be`:
-```dockerfile
-RUN apt-get update && apt-get install -y \
-    your-package-here \
- && rm -rf /var/lib/apt/lists/*
+### SSH issues
+```bash
+# Check keys
+ls -la ~/.ssh/
+
+# Test GitHub
+ssh -T git@github.com
 ```
 
-### Changing Java Version
+### Port conflict
+Edit `.env`, change `BACKEND_PORT=8081`
 
-1. Update Dockerfile.be to reference different Temurin version
-2. Rebuild container
+## 🚀 Deploy to AWS EC2
 
-## Architecture Decisions
+### 1. Build JAR
+```bash
+./gradlew bootJar
+# Output: build/libs/app.jar
+```
 
-### Why Debian Bookworm?
-- Stable, well-supported base
-- Smaller than Ubuntu
-- Good package availability
+### 2. Copy to EC2
+```bash
+scp build/libs/app.jar ubuntu@your-ec2:/home/ubuntu/
+```
 
-### Why Temurin JDK?
-- Open-source, maintained by Eclipse Adoptium
-- Long-term support for Java 21
-- Better licensing than Oracle JDK
+### 3. Run on EC2
+```bash
+ssh ubuntu@your-ec2
+java -jar app.jar
+```
 
-### Why Non-Root User?
-- Security best practice
-- Matches file permissions on host
-- VS Code Dev Containers convention
-
-## Next Steps
-
-- [ ] Add database service to `docker-compose.dev.yml` if needed
-- [ ] Configure frontend dev container (if applicable)
-- [ ] Set up CI/CD pipeline
-- [ ] Add test database configuration
-
-## Contributing
-
-When modifying this setup:
-1. Test both VS Code and Docker Compose methods
-2. Update this README with any configuration changes
-3. Ensure scripts have LF line endings (not CRLF)
+## ✅ Validation
+```bash
+bash /workspace/scripts/validate.sh
+```

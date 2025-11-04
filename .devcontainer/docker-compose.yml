@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  backend-dev:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    container_name: java-backend-dev-ubuntu
+    command: sleep infinity
+    
+    volumes:
+      # Mount entire project directory
+      - ..:/workspace:cached
+      
+      # Cache Gradle and Maven dependencies
+      - gradle-cache:/home/vscode/.gradle
+      - maven-cache:/home/vscode/.m2
+      
+      # Mount SSH keys (read-only)
+      - type: bind
+        source: ${HOME}/.ssh
+        target: /home/vscode/.ssh
+        read_only: true
+    
+    environment:
+      # Git configuration
+      - BACKEND_REPO=${BACKEND_REPO:-}
+      - CLONE_METHOD=${CLONE_METHOD:-ssh}
+      
+      # Application ports
+      - BACKEND_PORT=8080
+      - FRONTEND_PORT=5173
+      
+      # Spring Boot profile
+      - SPRING_PROFILES_ACTIVE=dev
+      
+      # Timezone
+      - TZ=Asia/Manila
+    
+    networks:
+      - devnet
+    
+    # Port mappings
+    ports:
+      - "8080:8080"
+      - "5173:5173"
+
+networks:
+  devnet:
+    name: car-rental-devnet
+    driver: bridge
+
+volumes:
+  gradle-cache:
+    name: gradle-cache-ubuntu
+  maven-cache:
+    name: maven-cache-ubuntu

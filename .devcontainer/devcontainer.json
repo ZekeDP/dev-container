@@ -1,34 +1,58 @@
 {
-  "name": "backend-devcontainer-debian",
-  // Build from your local Dockerfile (no prebuilt image)
-  "build": {
-    "dockerfile": "Dockerfile.be",
-    "context": "."
-  },
-  "workspaceFolder": "/workspaces",
+  "name": "Java 21 Backend (Ubuntu 22.04 LTS)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "backend-dev",
+  "workspaceFolder": "/workspace",
   "remoteUser": "vscode",
-
-  // Mount your Windows SSH keys read-only (adjust for macOS/Linux if needed)
-  "mounts": [
-    "source=/Users/zeke/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
-  ],
 
   "customizations": {
     "vscode": {
       "extensions": [
         "vscjava.vscode-java-pack",
         "vmware.vscode-boot-dev-pack",
+        "vscjava.vscode-gradle",
+        "vscjava.vscode-maven",
         "ms-azuretools.vscode-docker",
-        "eamodio.gitlens"
-      ]
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "java.configuration.runtimes": [
+          {
+            "name": "JavaSE-21",
+            "path": "/usr/lib/jvm/temurin-21-jdk-amd64",
+            "default": true
+          }
+        ],
+        "java.jdt.ls.java.home": "/usr/lib/jvm/temurin-21-jdk-amd64",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "files.eol": "\n"
+      }
     }
   },
 
-  // Optional: run your init/clone steps
-  "postCreateCommand": "bash ./dev-container/scripts/git-setup.sh",
+  "postCreateCommand": "bash /workspace/scripts/setup.sh",
 
-  // Handy basic utilities
+  "forwardPorts": [8080, 5173],
+  "portsAttributes": {
+    "8080": {
+      "label": "Backend API",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "Frontend Dev Server",
+      "onAutoForward": "notify"
+    }
+  },
+
   "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {}
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": false,
+      "installOhMyZsh": false
+    }
+  },
+
+  "remoteEnv": {
+    "WORKSPACE_ROOT": "/workspace"
   }
 }
