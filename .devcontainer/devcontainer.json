@@ -13,8 +13,7 @@
         "vscjava.vscode-gradle",
         "vscjava.vscode-maven",
         "ms-azuretools.vscode-docker",
-        "eamodio.gitlens",
-        "streetsidesoftware.code-spell-checker"
+        "eamodio.gitlens"
       ],
       "settings": {
         "java.configuration.runtimes": [
@@ -25,34 +24,18 @@
           }
         ],
         "java.jdt.ls.java.home": "/usr/lib/jvm/temurin-21-jdk-amd64",
-        "terminal.integrated.defaultProfile.linux": "bash",
-        "files.eol": "\n"
+        "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
   },
 
-  "postCreateCommand": "bash /workspace/scripts/setup.sh",
+  "postCreateCommand": "bash /workspace/scripts/run-all.sh",
 
   "forwardPorts": [8080, 5173],
-  "portsAttributes": {
-    "8080": {
-      "label": "Backend API",
-      "onAutoForward": "notify"
-    },
-    "5173": {
-      "label": "Frontend Dev Server",
-      "onAutoForward": "notify"
-    }
-  },
 
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
-      "installZsh": false,
-      "installOhMyZsh": false
+      "installZsh": false
     }
-  },
-
-  "remoteEnv": {
-    "WORKSPACE_ROOT": "/workspace"
   }
 }

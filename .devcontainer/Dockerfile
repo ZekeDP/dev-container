@@ -9,23 +9,23 @@ ENV TZ=Asia/Manila
 
 # Install base tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    apt-transport-https \
+    bash-completion \
     ca-certificates \
     curl \
-    wget \
-    gnupg \
     git \
-    unzip \
-    zip \
-    tar \
+    gnupg \
     jq \
-    sudo \
-    procps \
-    vim \
     nano \
-    bash-completion \
     openssh-client \
+    procps \
     software-properties-common \
-    apt-transport-https \
+    sudo \
+    tar \
+    unzip \
+    vim \
+    wget \
+    zip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Temurin JDK 21 (Eclipse Adoptium)

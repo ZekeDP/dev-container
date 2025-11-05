@@ -21,21 +21,24 @@ services:
         source: ${HOME}/.ssh
         target: /home/vscode/.ssh
         read_only: true
-    
+
+    # env_file:
+    #   - /workspace/config/.env.example
+
     environment:
       # Git configuration
-      - BACKEND_REPO=${BACKEND_REPO:-}
-      - CLONE_METHOD=${CLONE_METHOD:-ssh}
+      # - BACKEND_REPO=${BACKEND_REPO:-}
+      # - CLONE_METHOD=${CLONE_METHOD:-ssh}
       
       # Application ports
       - BACKEND_PORT=8080
       - FRONTEND_PORT=5173
       
       # Spring Boot profile
-      - SPRING_PROFILES_ACTIVE=dev
+      # - SPRING_PROFILES_ACTIVE=dev
       
       # Timezone
-      - TZ=Asia/Manila
+      # - TZ=Asia/Manila
     
     networks:
       - devnet
