@@ -3,10 +3,13 @@ set -euo pipefail
 
 echo "📄 Loading Environment Variables..."
 
+# Use PROJECT_HOME from environment, or default to /car-rental
+PROJECT_HOME="${PROJECT_HOME:-/car-rental}"
+
 # Load .env if it exists
-if [ -f "/workspace/.env" ]; then
+if [ -f "${PROJECT_HOME}/.env" ]; then
     set -a
-    source /workspace/.env
+    source ${PROJECT_HOME}/.env
     set +a
     echo "✓ Loaded .env"
 else
@@ -14,9 +17,9 @@ else
 fi
 
 # Load .env.local if it exists (overrides .env)
-if [ -f "/workspace/.env.local" ]; then
+if [ -f "${PROJECT_HOME}/.env.local" ]; then
     set -a
-    source /workspace/.env.local
+    source ${PROJECT_HOME}/.env.local
     set +a
     echo "✓ Loaded .env.local"
 fi

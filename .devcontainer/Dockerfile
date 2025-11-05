@@ -49,14 +49,18 @@ RUN groupadd --gid ${USER_GID} ${USERNAME} && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} && \
     chmod 0440 /etc/sudoers.d/${USERNAME}
 
+# Project home directory configuration
+ARG PROJECT_HOME=/car-rental
+ENV PROJECT_HOME=${PROJECT_HOME}
+
 # Create workspace
-RUN mkdir -p /workspace && chown ${USERNAME}:${USERNAME} /workspace
+RUN mkdir -p ${PROJECT_HOME} && chown ${USERNAME}:${USERNAME} ${PROJECT_HOME}
 
 # Switch to non-root user
 USER ${USERNAME}
-WORKDIR /workspace
+WORKDIR ${PROJECT_HOME}
 
 # Configure git
-RUN git config --global --add safe.directory /workspace
+RUN git config --global --add safe.directory ${PROJECT_HOME}
 
 CMD ["sleep", "infinity"]

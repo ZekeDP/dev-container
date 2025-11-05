@@ -2,7 +2,8 @@
   "name": "Java 21 Backend (Ubuntu 22.04 LTS)",
   "dockerComposeFile": "docker-compose.yml",
   "service": "backend-dev",
-  "workspaceFolder": "/workspace",
+  // Note: workspaceFolder must match PROJECT_HOME in config/.env (doesn't support env vars)
+  "workspaceFolder": "/car-rental",
   "remoteUser": "vscode",
 
   "customizations": {
@@ -29,7 +30,7 @@
     }
   },
 
-  "postCreateCommand": "bash /workspace/scripts/run-all.sh",
+  "postCreateCommand": "bash ${PROJECT_HOME}/scripts/run-all.sh",
 
   "forwardPorts": [8080, 5173],
 

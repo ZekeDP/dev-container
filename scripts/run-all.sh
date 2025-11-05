@@ -8,11 +8,11 @@ echo ""
 
 # Array of scripts to run in order
 SCRIPTS=(
-    "/workspace/scripts/01-load-env.sh"
-    "/workspace/scripts/02-configure-git.sh"
-    "/workspace/scripts/03-setup-ssh.sh"
-    "/workspace/scripts/04-clone-repo.sh"
-    "/workspace/scripts/05-finalize.sh"
+    "/car-rental/scripts/01-load-env.sh"
+    "/car-rental/scripts/02-configure-git.sh"
+    "/car-rental/scripts/03-setup-ssh.sh"
+    "/car-rental/scripts/04-clone-repo.sh"
+    "/car-rental/scripts/05-finalize.sh"
 )
 
 # Run each script

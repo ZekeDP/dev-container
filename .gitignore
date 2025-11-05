@@ -12,9 +12,8 @@
 .DS_Store
 Thumbs.db
 
-# Cloned repos
-backend/
-frontend/
+# Cloned repos in workspace
+workspace/
 
 # Logs
 *.log
