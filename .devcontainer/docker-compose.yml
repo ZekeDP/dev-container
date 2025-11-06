@@ -5,12 +5,14 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+      args:
+        PROJECT_HOME: ${PROJECT_HOME:-/car-rental}
     container_name: java-backend-dev-ubuntu
     command: sleep infinity
-    
+
     volumes:
       # Mount entire project directory
-      - ..:/workspace:cached
+      - ..:${PROJECT_HOME:-/car-rental}:cached
 
       # Cache Gradle and Maven dependencies
       - gradle-cache:/home/vscode/.gradle
