@@ -18,7 +18,8 @@
         "vscjava.vscode-spring-boot-dashboard",
         "vmware.vscode-spring-boot",
         "VisualStudioExptTeam.vscodeintellicode",
-        "SonarSource.sonarlint-vscode"
+        "SonarSource.sonarlint-vscode",
+        "Anthropic.claude-code"
       ],
       "settings": {
         "java.configuration.runtimes": [
