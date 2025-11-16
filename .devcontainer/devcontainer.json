@@ -1,7 +1,7 @@
 {
-  "name": "Java 21 Backend (Ubuntu 22.04 LTS)",
+  "name": "Car Rental (Ubuntu 22.04 LTS)",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "backend-dev",
+  "service": "car-rental-devcontainer",
   // Note: workspaceFolder must match PROJECT_HOME in config/.env (doesn't support env vars)
   "workspaceFolder": "/car-rental",
   "remoteUser": "vscode",
@@ -14,17 +14,21 @@
         "vscjava.vscode-gradle",
         "vscjava.vscode-maven",
         "ms-azuretools.vscode-docker",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "vscjava.vscode-spring-boot-dashboard",
+        "vmware.vscode-spring-boot",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "SonarSource.sonarlint-vscode"
       ],
       "settings": {
         "java.configuration.runtimes": [
           {
             "name": "JavaSE-21",
-            "path": "/usr/lib/jvm/temurin-21-jdk-amd64",
+            "path": "/usr/lib/jvm/temurin-21-jdk-arm64",
             "default": true
           }
         ],
-        "java.jdt.ls.java.home": "/usr/lib/jvm/temurin-21-jdk-amd64",
+        "java.jdt.ls.java.home": "/usr/lib/jvm/temurin-21-jdk-arm64",
         "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
