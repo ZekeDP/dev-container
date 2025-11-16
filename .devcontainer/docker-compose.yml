@@ -1,13 +1,13 @@
 version: "3.9"
 
 services:
-  backend-dev:
+  car-rental-devcontainer:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
       args:
         PROJECT_HOME: ${PROJECT_HOME:-/car-rental}
-    container_name: java-backend-dev-ubuntu
+    container_name: car-rental
     command: sleep infinity
 
     volumes:
@@ -23,6 +23,13 @@ services:
         source: ${HOME}/.ssh
         target: /tmp/host-ssh
         read_only: true
+      # Forward SSH agent (macOS)
+      - type: bind
+        source: /run/host-services/ssh-auth.sock
+        target: /ssh-agent
+
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent
 
     env_file:
       - ../config/.env
@@ -34,11 +41,11 @@ services:
     
     networks:
       - devnet
-    
-    # Port mappings
-    ports:
-      - "8080:8080"
-      - "5173:5173"
+
+    # Port mappings handled by VS Code devcontainer forwardPorts
+    # ports:
+    #   - "8080:8080"
+    #   - "5173:5173"
 
 networks:
   devnet:

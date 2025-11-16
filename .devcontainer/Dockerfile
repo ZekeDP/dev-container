@@ -36,8 +36,13 @@ RUN wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt
     rm -rf /var/lib/apt/lists/*
 
 # Set Java environment variables
-ENV JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-arm64
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+# Install Node.js 20 LTS (for React frontend)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
 ARG USERNAME=vscode
